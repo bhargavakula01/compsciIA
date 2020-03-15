@@ -1,0 +1,7 @@
+ shirt
+$2.0
+188
+male
+kids
+123
+
