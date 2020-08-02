@@ -1,39 +1,118 @@
+/**
+ * @(#)Customer.java
+ *
+ *
+ * @author 
+ * @version 1.00 2020/2/25
+ */
 import java.util.ArrayList;
-
+/**
+ * Creates a Customer object
+ */
 public class Customer 
 {
 	private String name;
 	private String gender;
 	private String location;
-	private int phoneNum;
+	private String phoneNum;
 	private String email;
-	private int creditCardNum;
+	private String creditCardNum;
 	private ArrayList<Product> cart;
 	
-	
-	public Customer(String name, String gender, String location, int phoneNum, String email, int creditCardNum)
+	/**
+	 * Constructs a customer object with a name, gender, location, phone number, email, credit card number, and a cart of purchases
+	 * @param customerName the name of the customer
+	 * @param customerGender the customer gender
+	 * @param customerLocation the place where the customer lives
+	 * @param customerPhoneNum the customer's phone number
+	 * @param customerEmail the customer's email
+	 * @param customerCreditCardNum the customer's credit card number
+	 */
+	public Customer(String customerName, String customerGender, String customerLocation, String customerPhoneNum, String customerEmail, String customerCreditCardNum)
 	{
-		this.name = name;
-		this.gender = gender;
-		this.location = location;
-		this.phoneNum = phoneNum;
-		this.email = email;
-		this.creditCardNum = creditCardNum;
+		this.name = customerName;
+		this.gender = customerGender;
+		this.location = customerLocation;
+		this.phoneNum = customerPhoneNum;
+		this.email = customerEmail;
+		this.creditCardNum = customerCreditCardNum;
 		cart = new ArrayList<Product>();
 	}
-	
-	public void addProduct(Product customerPurchase, int quantityOfPurchace)
+	/**
+	 * adds a product to the customer's cart
+	 * @param productPurchase the products that the customer is purchasing
+	 * @param quantityOfPurchace the amount of product that the customer is purchasing
+	 */
+	public void addProduct(Product productPurchase, int quantityOfPurchase)
 	{
-		customerPurchase.setQuantity(quantityOfPurchace);
-		cart.add(customerPurchase);
+		String productName = productPurchase.getName();
+		Product inCart = this.getProductPurchasedByName(productName); //checking to see if product is in the cart
+		if(inCart == null) // Product not in the cart
+		{
+			productPurchase.setQuantity(quantityOfPurchase);
+			cart.add(productPurchase);
+		}
+		else // Product in the Cart
+		{
+			int cartQuantity = inCart.getQuantity();
+			inCart.setQuantity(cartQuantity + quantityOfPurchase);
+		}
+		
 	}
 	
+	/**
+	 * gets the ArrayList of products that the customer is purchasing
+	 * @return ArrayList of products that the customer is purchasing
+	 */
 	public ArrayList<Product> getCart()
 	{
 		return this.cart;
 	}
-	
-	public Product getProductPurchacedbyName(String productName)
+	/**
+	 * formats the cart product objects so that they can be saved to a text file
+	 * @return a string on the product name and then its quantity
+	 */
+	public String cartSaveToFile()
+	{
+		String output = "";
+		for(Product e: cart)
+		{
+			output += e.getName() + " " + e.getQuantity() + " ";
+		}
+		return output;
+	}
+	/**
+	 * formats the cart product objects so that they can be printed out by the driver
+	 * @return a string on the product name and then its quantity
+	 */
+	public String cartToString()
+	{
+		String output = "";
+		for(Product e: cart)
+		{
+			output += e.getName() + " " + e.getQuantity() + " ";
+		}
+		return output;
+	}
+	/**
+	 * creates an array of the product names from the cart of purchases
+	 * @return an array of product names that the customer has purchased
+	 */
+	public String[] getCartProductNames()
+	{
+		String[] allCartProductNames = new String[this.getCart().size()];
+    	for(int i = 0; i < allCartProductNames.length; i++)
+    	{
+    		allCartProductNames[i] = this.getCart().get(i).getName();
+    	}
+    	return allCartProductNames;
+	}
+	/**
+	 * gets the product based on the name of the product
+	 * @param productName the name of the product that the customer is purchasing
+	 * @return whether the product is the customer cart
+	 */
+	public Product getProductPurchasedByName(String productName)
 	{
 		for(Product e: cart)
     	{
@@ -44,11 +123,15 @@ public class Customer
     	}
     	return null;
 	}
-	
+	/**
+	 * allows for the customer to return a product
+	 * @param productToDelete the product that the customer wants to return
+	 * @return whether the product was removed from the cart
+	 */
 	public boolean removeProductPurchased(Product productToDelete)
     {
     	int x = cart.indexOf(productToDelete);
-    	if(x <= 0)
+    	if(x >= 0)
     	{
     		cart.remove(x);
     		return true;
@@ -58,7 +141,8 @@ public class Customer
     }
 
 	/**
-	 * @return the name
+	 * gets the name of the customer
+	 * @return the name of the customer
 	 */
 	public String getName() 
 	{
@@ -67,15 +151,17 @@ public class Customer
 
 
 	/**
-	 * @param name the name to set
+	 * sets the customer name
+	 * @param customerName customer name to set
 	 */
-	public void setName(String name) {
-		this.name = name;
+	public void setName(String customerName) {
+		name = customerName;
 	}
 
 
 	/**
-	 * @return the gender
+	 * gets the gender of the customer
+	 * @return the customer gender
 	 */
 	public String getGender() {
 		return gender;
@@ -83,43 +169,49 @@ public class Customer
 
 
 	/**
-	 * @param gender the gender to set
+	 * sets the gender of the customer
+	 * @param customerGender the customer gender to set
 	 */
-	public void setGender(String gender) {
-		this.gender = gender;
+	public void setGender(String customerGender) {
+		gender = customerGender;
 	}
 
 
 	/**
-	 * @return the location
+	 * gets the customer location
+	 * @return the customer location 
 	 */
 	public String getLocation() {
 		return location;
 	}
 
 	/**
-	 * @param location the location to set
+	 * sets the customer location
+	 * @param custoemrLocation the customer location to set
 	 */
-	public void setLocation(String location) {
-		this.location = location;
+	public void setLocation(String customerLocation) {
+		location = customerLocation;
 	}
 
 	/**
-	 * @return the phoneNum
+	 * gets the customer phone number
+	 * @return the phoneNum of the customer
 	 */
-	public int getPhoneNum() {
+	public String getPhoneNum() {
 		return phoneNum;
 	}
 
 	/**
-	 * @param phoneNum the phoneNum to set
+	 * sets the customer phone number
+	 * @param customerPhoneNum the customer phone number to set
 	 */
-	public void setPhoneNum(int phoneNum) {
-		this.phoneNum = phoneNum;
+	public void setPhoneNum(String customerPhoneNum) {
+		phoneNum = customerPhoneNum;
 	}
 
 	/**
-	 * @return the email
+	 * gets the customer email address
+	 * @return the email of the customer
 	 */
 	public String getEmail() {
 		return email;
@@ -127,31 +219,35 @@ public class Customer
 
 
 	/**
-	 * @param email the email to set
+	 * sets the customer email address
+	 * @param customerEmail the customer email to set
 	 */
-	public void setEmail(String email) {
-		this.email = email;
+	public void setEmail(String customerEmail) {
+		email = customerEmail;
 	}
 
 
 	/**
-	 * @return the creditCardNum
+	 * gets the customer credit card information
+	 * @return the creditCardNum of the customer
 	 */
-	public int getCreditCardNum() {
+	public String getCreditCardNum() {
 		return creditCardNum;
 	}
 
 
 	/**
-	 * @param creditCardNum the creditCardNum to set
+	 * sets the customer credit card information
+	 * @param customerCreditCardNum the customer creditCardNum to set
 	 */
-	public void setCreditCardNum(int creditCardNum) {
-		this.creditCardNum = creditCardNum;
+	public void setCreditCardNum(String customerCreditCardNum) {
+		creditCardNum = customerCreditCardNum;
 	}
 	
 	/**
-	 * @param o
-	 * @return whehther the two product objects are equal
+	 * compares two customer objects
+	 * @param o generic object that is casted into a customer object
+	 * @return whether the two product objects are equal
 	 */
 	public boolean equals(Object o)
 	{
@@ -159,7 +255,8 @@ public class Customer
 		return this.name.equals(other.name);
 	}
 	/**
-	 * @param o
+	 * compares the name of two customer objects and calculates the difference in the object names
+	 * @param o a generic object that is casted into a customer object in order to be compared to
 	 * @return the difference in the prices
 	 */
 	public int compareTo(Object o)
@@ -168,20 +265,21 @@ public class Customer
 		return this.name.compareTo(other.name);
 	}
 	/**
+	 * method to print a customer object
 	 * @return a Customer object
 	 */
 	public String toString()
 	{
-		return name + " " + gender + " " + location + " " + phoneNum + " " + email + " " + creditCardNum + " " + cart;
+		return name + " " + gender + " " + location + " " + phoneNum + " " + email + " " + creditCardNum + " " + cartToString();
 	}
-	
+	/**
+	 * save customer object to a file
+	 * @return the Customer object
+	 */
 	public String saveToFile()
 	{
-		return name + "\n" + gender + "\n" + location + "\n" + phoneNum + "\n" + email + "\n" + creditCardNum;
+		return name + "\n" + gender + "\n" + location + "\n" + phoneNum + "\n" + email + "\n" + creditCardNum + "\n" + cartSaveToFile() + "\n";
 	}
 	
-	
-	
-
 }
 

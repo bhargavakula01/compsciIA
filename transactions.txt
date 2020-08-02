@@ -1,6 +1,32 @@
- bob
+Sirius Black
 male
-homestead
-1234
-bab
-1234
+dallas, TX
+123-345-5678
+HarryGodFather@yahoo.com
+1234123412341234
+shoes 11 shirts 19 jackets 1 
+
+Harry Potter
+male
+Austin, TX
+123-345-5678
+HPFan@gmail.com
+1234123412341234
+shoes 3 shirts 1 
+
+James Potter
+male
+Galveston, TX
+123-345-5678
+JamesPotter@gmail.com
+1234123412341234
+jeans 12 
+
+Hermione Granger
+female
+dallas
+123-345-5678
+Hermione@gmail.com
+1234123412341234
+jackets 1 
+
